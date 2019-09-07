@@ -37,6 +37,9 @@ endif()
 # TETRIS_SOURCES 변수에 있는 파일들을 컴파일해서 tetris.exe (혹은 tetris.html) 라는 이름의 실행 파일을 만듦
 add_executable(tetris ${TETRIS_SOURCES})
 
+# tetris 라는 타겟은 C++11을 사용함
+set_property(TARGET tetris PROPERTY CXX_STANDARD 11)
+
 
 # 만약 Emscripten 환경이라면...
 if(EMSCRIPTEN)
