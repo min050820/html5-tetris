@@ -1,4 +1,4 @@
-# Created by Yun Yeomin <min050820@gmail.com>
+﻿# Created by Yun Yeomin <min050820@gmail.com>
 # Licensed under GPLv3
 
 # CMake 3.1 이상이 되어야 이 프로젝트를 빌드할 수 있음을 표기
@@ -24,13 +24,21 @@ endif()
 
 
 # TETRIS_SOURCES 변수를 설정함
-set(TETRIS_SOURCES main.cpp)
+set(TETRIS_SOURCES main.cpp
+	src/ProgramState.h src/ProgramState.cpp
+)
 
 
 # 만약 Emscripten 환경이라면...
 if(EMSCRIPTEN)
     # 실행 파일 확장자를 .html 로 만듦 (기본은 .js)
     set(CMAKE_EXECUTABLE_SUFFIX .html)
+endif()
+
+# 만약 Micsoroft Visual C++ 환경이라면...
+if(MSVC)
+	# 소스코드가 UTF-8로 저장되어 있다고 알림
+	add_definitions("/utf-8")
 endif()
 
 
