@@ -2,6 +2,9 @@
 #define PROGRAM_STATE_H_
 
 
+#include <memory>
+
+class Screen;
 struct SDL_Window;
 struct SDL_Renderer;
 
@@ -13,6 +16,8 @@ public:
 	~ProgramState();
 	SDL_Window* window() { return _window; }
 	SDL_Renderer* renderer() { return _renderer; }
+	int width() { return _width; }
+	int height() { return _height; }
 
 	void mainLoop();
 
@@ -26,6 +31,8 @@ private:
 private:
 	SDL_Window* _window = nullptr;
 	SDL_Renderer* _renderer = nullptr;
+	int _width, _height;
+	std::shared_ptr<Screen> _screen;
 };
 
 
