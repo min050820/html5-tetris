@@ -13,7 +13,7 @@ ProgramState::ProgramState() : _height(600), _width(800) {
 	_window = SDL_CreateWindow(u8"A Tetris Clone",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		_width, _height,
-		SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
+		SDL_WINDOW_RESIZABLE);
 
 
 	// 렌더러 생성
