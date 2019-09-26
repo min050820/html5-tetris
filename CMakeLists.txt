@@ -48,7 +48,7 @@ endif()
 add_executable(tetris ${TETRIS_SOURCES})
 
 # tetris 라는 타겟은 C++11을 사용함
-set_property(TARGET tetris PROPERTY CXX_STANDARD 11)
+set_property(TARGET tetris PROPERTY CXX_STANDARD 14)
 
 
 # 만약 Emscripten 환경이라면...
