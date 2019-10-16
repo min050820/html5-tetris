@@ -28,6 +28,7 @@ set(TETRIS_SOURCES main.cpp
 	src/ProgramState.h src/ProgramState.cpp
 	src/Screen.h
 	src/MainGameScreen.h src/MainGameScreen.cpp
+	src/TetrisGrid.h src/TetrisGrid.cpp
 )
 
 

@@ -6,7 +6,7 @@
 
 
 void MainGameScreen::update(ProgramState& state) {
-	// 아무것도 할 게 없다.
+	tetrisGrid.update(state);
 }
 
 void MainGameScreen::render(ProgramState& state) {
@@ -19,4 +19,6 @@ void MainGameScreen::render(ProgramState& state) {
 	SDL_Rect r = { screenX, screenY, screenLength, screenLength };
 	SDL_SetRenderDrawColor(state.renderer(), 32, 32, 32, 255);
 	SDL_RenderFillRect(state.renderer(), &r);
+
+	tetrisGrid.render(state, {screenX + 16, screenY + 16, screenLength - 32, screenLength - 32});
 }

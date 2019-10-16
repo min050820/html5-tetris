@@ -3,8 +3,12 @@
 
 
 #include "Screen.h"
+#include "TetrisGrid.h"
+
 
 class MainGameScreen : public Screen {
+	TetrisGrid tetrisGrid;
+
 public:
 	MainGameScreen(ProgramState&) {}
 	virtual ~MainGameScreen() {}
