@@ -69,8 +69,32 @@ void TetrisGrid::render(ProgramState& state, SDL_Rect boundary) {
 				(int)blockLen + 1
 			};
 
-			
-			SDL_SetRenderDrawColor(state.renderer(), 238, 238, 238, 255);
+			switch (grid[i][j]) {
+			case Tetrimino::I:
+				SDL_SetRenderDrawColor(state.renderer(), 0, 240, 240, 255);
+				break;
+			case Tetrimino::J:
+				SDL_SetRenderDrawColor(state.renderer(), 0, 0, 240, 255);
+				break;
+			case Tetrimino::L:
+				SDL_SetRenderDrawColor(state.renderer(), 240, 160, 0, 255);
+				break;
+			case Tetrimino::O:
+				SDL_SetRenderDrawColor(state.renderer(), 240, 240, 0, 255);
+				break;
+			case Tetrimino::S:
+				SDL_SetRenderDrawColor(state.renderer(), 0, 240, 0, 255);
+				break;
+			case Tetrimino::T:
+				SDL_SetRenderDrawColor(state.renderer(), 160, 0, 240, 255);
+				break;
+			case Tetrimino::Z:
+				SDL_SetRenderDrawColor(state.renderer(), 240, 0, 0, 255);
+				break;
+			default:
+				SDL_SetRenderDrawColor(state.renderer(), 238, 238, 238, 255);
+				break;
+			}
 			SDL_RenderFillRect(state.renderer(), &r);
 		}
 	}
