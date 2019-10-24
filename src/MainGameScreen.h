@@ -4,17 +4,20 @@
 
 #include "Screen.h"
 #include "TetrisGrid.h"
+#include "TetriminoGenerator.h"
 
 
 class MainGameScreen : public Screen {
-	TetrisGrid tetrisGrid;
-
 public:
 	MainGameScreen(ProgramState&) {}
 	virtual ~MainGameScreen() {}
 
 	virtual void update(ProgramState&);
 	virtual void render(ProgramState&);
+
+private:
+	TetrisGrid tetrisGrid;
+	TetriminoGenerator tetriminoGenerator;
 };
 
 

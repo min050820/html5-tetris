@@ -17,6 +17,8 @@ void main_loop(ProgramState* state) {
 	state->mainLoop();
 }
 
+#include "src/Tetrimino.h"
+
 int main(int argc, char *argv[]) {
     SDL_Init(SDL_INIT_EVERYTHING);
 

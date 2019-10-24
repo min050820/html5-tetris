@@ -2,23 +2,42 @@
 #define TETRIS_GRID_H_
 
 
+#include "Tetrimino.h"
+
 struct SDL_Rect;
 class ProgramState;
-
-enum class Tetrimino : unsigned char {
-	EMPTY = 0,
-	I, O, T, S, Z, J, L
-};
+class MainGameScreen;
 
 
 class TetrisGrid {
-	// [0][0] = 왼쪽 아래
-	Tetrimino grid[40][10];
-
 public:
 	TetrisGrid();
 	void render(ProgramState& state, SDL_Rect boundary);
 	void update(ProgramState& state);
+	bool isNewFallingShapeRequired();
+	void pushNewFallingShape(TetriminoShape newShape);
+
+private:
+	void _updateFallingShape(ProgramState& state);
+	void _fallingLockShape();
+	bool _fallingCheckOverlap();
+	bool _fallingBottomBlocked();
+
+private:
+	// [0][0] = 왼쪽 아래
+	TetriminoBlock _grid[40][10];
+
+	bool _keyRotateClockwise = false;
+	bool _keyRotateCounterClockwise = false;
+	bool _keyLeft = false;
+	bool _keyRight = false;
+	bool _keyDown = false;
+
+	bool _fallingNewShapeRequired;
+	TetriminoShape _fallingShape;
+	int _fallingRotation, _fallingY, _fallingX;
+	float _fallingTimer;
+	int _fallingBlockedCount;
 };
 
 

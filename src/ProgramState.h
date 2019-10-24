@@ -23,6 +23,7 @@ public:
 
 public:
 	bool flagQuit = false;
+	float deltaTime = 0.01666666666f;
 
 private:
 	void _processEvent();

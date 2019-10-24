@@ -7,6 +7,10 @@
 
 void MainGameScreen::update(ProgramState& state) {
 	tetrisGrid.update(state);
+
+	if (tetrisGrid.isNewFallingShapeRequired()) {
+		tetrisGrid.pushNewFallingShape(tetriminoGenerator.next());
+	}
 }
 
 void MainGameScreen::render(ProgramState& state) {
