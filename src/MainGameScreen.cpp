@@ -5,11 +5,18 @@
 #include "ProgramState.h"
 
 
-void MainGameScreen::update(ProgramState& state) {
-	tetrisGrid.update(state);
+MainGameScreen::MainGameScreen(ProgramState& programState) {
+	_audioManager.startPlayback();
+}
 
-	if (tetrisGrid.isNewFallingShapeRequired()) {
-		tetrisGrid.pushNewFallingShape(tetriminoGenerator.next());
+MainGameScreen::~MainGameScreen() {
+}
+
+void MainGameScreen::update(ProgramState& state) {
+	_tetrisGrid.update(state);
+
+	if (_tetrisGrid.isNewFallingShapeRequired()) {
+		_tetrisGrid.pushNewFallingShape(_tetriminoGenerator.next());
 	}
 }
 
@@ -24,5 +31,5 @@ void MainGameScreen::render(ProgramState& state) {
 	SDL_SetRenderDrawColor(state.renderer(), 32, 32, 32, 255);
 	SDL_RenderFillRect(state.renderer(), &r);
 
-	tetrisGrid.render(state, {screenX + 16, screenY + 16, screenLength - 32, screenLength - 32});
+	_tetrisGrid.render(state, {screenX + 16, screenY + 16, screenLength - 32, screenLength - 32});
 }

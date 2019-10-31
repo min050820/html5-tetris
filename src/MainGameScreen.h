@@ -3,21 +3,23 @@
 
 
 #include "Screen.h"
+#include "AudioManager.h"
 #include "TetrisGrid.h"
 #include "TetriminoGenerator.h"
 
 
 class MainGameScreen : public Screen {
 public:
-	MainGameScreen(ProgramState&) {}
-	virtual ~MainGameScreen() {}
+	MainGameScreen(ProgramState& programState);
+	virtual ~MainGameScreen();
 
 	virtual void update(ProgramState&);
 	virtual void render(ProgramState&);
 
 private:
-	TetrisGrid tetrisGrid;
-	TetriminoGenerator tetriminoGenerator;
+	AudioManager _audioManager;
+	TetrisGrid _tetrisGrid;
+	TetriminoGenerator _tetriminoGenerator;
 };
 
 
