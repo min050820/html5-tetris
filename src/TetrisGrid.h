@@ -16,9 +16,12 @@ public:
 	void update(ProgramState& state);
 	bool isNewFallingShapeRequired();
 	void pushNewFallingShape(TetriminoShape newShape);
+	void tryRotateShape(bool isClockwise);
 
 private:
 	void _updateFallingShape(ProgramState& state);
+	int _updateClearLine();
+	bool _fallingRotateShape(int xDisp, int yDisp, bool isClockwise);
 	void _fallingLockShape();
 	bool _fallingCheckOverlap();
 	bool _fallingBottomBlocked();
@@ -32,6 +35,7 @@ private:
 	bool _keyLeft = false;
 	bool _keyRight = false;
 	bool _keyDown = false;
+	bool _keyHardDrop = false;
 
 	bool _fallingNewShapeRequired;
 	TetriminoShape _fallingShape;

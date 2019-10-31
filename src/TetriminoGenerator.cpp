@@ -1,4 +1,4 @@
-#include "TetriminoGenerator.h"
+ï»¿#include "TetriminoGenerator.h"
 
 #include <random>
 
@@ -8,46 +8,50 @@ TetriminoGenerator::TetriminoGenerator() {
 
 
 TetriminoShape TetriminoGenerator::next() {
-	// ³²Àº Á¶°¢ÀÌ ¾ø´Ù¸é, »õ·Î¿î Á¶°¢µéÀ» »ı¼º
+	// ë‚¨ì€ ì¡°ê°ì´ ì—†ë‹¤ë©´, ìƒˆë¡œìš´ ì¡°ê°ë“¤ì„ ìƒì„±
 	if (_nextPieces.empty())
 		generateNextPieces();
 
-	// Á¦ÀÏ ¾Õ¿¡ ÀÖ´Â Á¶°¢À» »©ÁÜ
+	// ì œì¼ ì•ì— ìˆëŠ” ì¡°ê°ì„ ë¹¼ì¤Œ
 	TetriminoShape nowShape = _nextPieces[0];
 
-	// Á¦ÀÏ ¾ÕÀÇ Á¶°¢À» »èÁ¦
+	// ì œì¼ ì•ì˜ ì¡°ê°ì„ ì‚­ì œ
 	_nextPieces.erase(_nextPieces.begin());
 
-	// ¸®ÅÏ
+	// ë¦¬í„´
 	return nowShape;
 }
 
 std::array<TetriminoShape, 6> TetriminoGenerator::peek() {
 	std::array<TetriminoShape, 6> ret;
 	
-	// ³²Àº Á¶°¢ÀÌ 6°³ ¹Ì¸¸ÀÌ¶ó¸é, »õ·Î¿î Á¶°¢µéÀ» »ı¼º
+	// ë‚¨ì€ ì¡°ê°ì´ 6ê°œ ë¯¸ë§Œì´ë¼ë©´, ìƒˆë¡œìš´ ì¡°ê°ë“¤ì„ ìƒì„±
 	if (_nextPieces.size() < 6)
 		generateNextPieces();
 
-	// ¸®ÅÏÇÒ º¯¼ö·Î ³»¿ëÀ» º¹»ç
+	// ë¦¬í„´í•  ë³€ìˆ˜ë¡œ ë‚´ìš©ì„ ë³µì‚¬
 	std::copy(_nextPieces.begin(), _nextPieces.begin() + 6, ret.begin());
 
-	// ¸®ÅÏ
+	// ë¦¬í„´
 	return ret;
 }
 
 void TetriminoGenerator::generateNextPieces() {
-	// »õ·Î¿î Á¶°¢À» »ı¼º
+	// ìƒˆë¡œìš´ ì¡°ê°ì„ ìƒì„±
 	std::array<TetriminoShape, 7> newPieces;
 
-	// [0, 7) ¹üÀ§¿¡¼­ Á¶°¢µéÀ» ¼ø¼­´ë·Î ÁöÁ¤
+	// [0, 7) ë²”ìœ„ì—ì„œ ì¡°ê°ë“¤ì„ ìˆœì„œëŒ€ë¡œ ì§€ì •
 	for (int i = 0; i < 7; i++)
-		newPieces[i] = (TetriminoShape) i;
+		newPieces[i] = (TetriminoShape) (i + 1);
 
-	// Á¶°¢µéÀ» ¼¯¾îÁÜ
-	// (±¸Çö ÇÊ¿ä)
+	// ì¡°ê°ë“¤ì„ ì„ì–´ì¤Œ
+	for (int i = 0; i < 6; i++) {
+		int j = _random() % (7 - i) + i;
+		std::swap(newPieces[i], newPieces[j]);
+	}
 
-	// Á¶°¢µéÀ» Å¥¿¡ ³Ö¾îÁÜ
+	// ì¡°ê°ë“¤ì„ íì— ë„£ì–´ì¤Œ
+	
 	auto endIterator = _nextPieces.end();
 	_nextPieces.insert(endIterator, newPieces.begin(), newPieces.end());
 }
