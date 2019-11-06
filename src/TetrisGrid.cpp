@@ -181,14 +181,16 @@ void TetrisGrid::pushNewFallingShape(TetriminoShape newShape) {
 }
 
 void TetrisGrid::doHardDrop() {
-	// 구현 필요
-
-	// 떨어진 뒤에는 타이머를 되돌림
-	_fallingTimer = 0;
+	while (!_fallingBottomBlocked())
+		_fallingY--;
+	_fallingLockShape();
 }
 
 void TetrisGrid::doSoftDrop() {
-	// 구현 필요
+	if (!_fallingBottomBlocked())
+		_fallingY--;
+	else
+		_fallingLockShape();
 
 	// 떨어진 뒤에는 타이머를 되돌림
 	_fallingTimer = 0;
@@ -203,11 +205,15 @@ void TetrisGrid::doRotateCCW() {
 }
 
 void TetrisGrid::doMoveLeft() {
-	// 구현 필요
+	_fallingX--;
+	if (_fallingCheckOverlap())
+		_fallingX++;
 }
 
 void TetrisGrid::doMoveRight() {
-	// 구현 필요
+	_fallingX++;
+	if (_fallingCheckOverlap())
+		_fallingX--;
 }
 
 void TetrisGrid::_tryRotateShape(bool isClockwise) {
@@ -283,7 +289,7 @@ int TetrisGrid::_updateClearLine() {
 
 		if (isFull) {
 			for (int row = i + 1; row < 40; row++)
-				for (int col = 0; col < 40; col++)
+				for (int col = 0; col < 10; col++)
 					_grid[row - 1][col] = _grid[row][col];
 		}
 	}
