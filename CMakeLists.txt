@@ -26,7 +26,7 @@ endif()
 # TETRIS_SOURCES 변수를 설정함
 set(TETRIS_SOURCES main.cpp
 	src/ProgramState.h src/ProgramState.cpp
-	src/Screen.h
+	src/Screen.h src/Screen.cpp
 	src/MainGameScreen.h src/MainGameScreen.cpp
 	src/Tetrimino.h
 	src/TetrisGrid.h src/TetrisGrid.cpp

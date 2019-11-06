@@ -13,6 +13,21 @@ MainGameScreen::~MainGameScreen() {
 }
 
 void MainGameScreen::update(ProgramState& state) {
+	Screen::update(state);
+
+	if (keyPressEvent[SDL_SCANCODE_SPACE])
+		_tetrisGrid.doHardDrop();
+	if (keyPressEvent[SDL_SCANCODE_UP] || keyPressEvent[SDL_SCANCODE_X])
+		_tetrisGrid.doRotateCW();
+	if (keyPressEvent[SDL_SCANCODE_LCTRL] || keyPressEvent[SDL_SCANCODE_Z])
+		_tetrisGrid.doRotateCCW();
+	if (keyPressEvent[SDL_SCANCODE_DOWN])
+		_tetrisGrid.doSoftDrop();
+	if (keyPressEvent[SDL_SCANCODE_LEFT])
+		_tetrisGrid.doMoveLeft();
+	if (keyPressEvent[SDL_SCANCODE_RIGHT])
+		_tetrisGrid.doMoveRight();
+
 	_tetrisGrid.update(state);
 
 	if (_tetrisGrid.isNewFallingShapeRequired()) {

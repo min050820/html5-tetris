@@ -11,7 +11,6 @@ TetrisGrid::TetrisGrid() {
 		for (int j = 0; j < 10; j++)
 			_grid[i][j] = TetriminoBlock::EMPTY;
 
-	_fallingNewShapeRequired = false;
 	_fallingShape = TetriminoShape::INVALID;
 	_fallingRotation = 0;
 	_fallingY = 0;
@@ -107,8 +106,6 @@ void TetrisGrid::render(ProgramState& state, SDL_Rect boundary) {
 		(int)(boundary.y + boundary.h - ((20) * blockLen)),
 		(int)(blockLen * 10),
 		(int)(blockLen * 20)
-
-
 	};
 	SDL_SetRenderDrawColor(state.renderer(), 255, 255, 255, 255);
 	SDL_RenderFillRect(state.renderer(), &r);
@@ -163,69 +160,15 @@ void TetrisGrid::render(ProgramState& state, SDL_Rect boundary) {
 }
 
 void TetrisGrid::update(ProgramState& state) {
-	// 키 입력 받음
-	const uint8_t *keystate = SDL_GetKeyboardState(nullptr);
-	bool nowKeyRotateClockwise = keystate[SDL_SCANCODE_X] || keystate[SDL_SCANCODE_UP];
-	bool nowKeyRotateCounterClockwise = keystate[SDL_SCANCODE_LCTRL] || keystate[SDL_SCANCODE_Z];
-	bool nowKeyLeft = keystate[SDL_SCANCODE_LEFT];
-	bool nowKeyRight = keystate[SDL_SCANCODE_RIGHT];
-	bool nowKeyDown = keystate[SDL_SCANCODE_DOWN];
-	bool nowKeyHardDrop = keystate[SDL_SCANCODE_SPACE];
-
-	// 방금 전까지는 안 눌려 있었는데 눌려 있어야 입력으로 침
-	// 사이드 퀘스트: 꾹 누르면 연속으로 움직이는 것을 구현해 보자
-	if (!_keyRotateClockwise && nowKeyRotateClockwise) {
-		tryRotateShape(true);
-	}
-	if (!_keyRotateCounterClockwise && nowKeyRotateCounterClockwise) {
-		tryRotateShape(false);
-	}
-	if (!_keyLeft && nowKeyLeft) {
-		_fallingX--;
-		if (_fallingCheckOverlap())
-			_fallingX++;
-	}
-	if (!_keyRight && nowKeyRight) {
-		_fallingX++;
-		if (_fallingCheckOverlap())
-			_fallingX--;
-	}
-	if (!_keyDown && nowKeyDown && _fallingShape != TetriminoShape::INVALID) {
-		_fallingTimer = 0;
-		if (_fallingBottomBlocked())
-			_fallingLockShape();
-		else
-			_fallingY--;
-	}
-	if (!_keyHardDrop && nowKeyHardDrop) {
-		_fallingTimer = 0;
-		if (_fallingBottomBlocked())
-			_fallingLockShape();
-		else {
-			while (!_fallingBottomBlocked())
-				_fallingY--;
-			_fallingLockShape();
-		}
-	}
-
-	// 입력값을 저장
-	_keyRotateClockwise = nowKeyRotateClockwise;
-	_keyRotateCounterClockwise = nowKeyRotateCounterClockwise;
-	_keyLeft = nowKeyLeft;
-	_keyRight = nowKeyRight;
-	_keyDown = nowKeyDown;
-	_keyHardDrop = nowKeyHardDrop;
-
 	_updateFallingShape(state);
 	_updateClearLine();
 }
 
 bool TetrisGrid::isNewFallingShapeRequired() {
-	return _fallingNewShapeRequired;
+	return _fallingShape == TetriminoShape::INVALID;
 }
 
 void TetrisGrid::pushNewFallingShape(TetriminoShape newShape) {
-	_fallingNewShapeRequired = false;
 	_fallingShape = newShape;
 	_fallingRotation = 0;
 	_fallingY = 19;
@@ -237,7 +180,37 @@ void TetrisGrid::pushNewFallingShape(TetriminoShape newShape) {
 		printf("Game ended!\n");
 }
 
-void TetrisGrid::tryRotateShape(bool isClockwise) {
+void TetrisGrid::doHardDrop() {
+	// 구현 필요
+
+	// 떨어진 뒤에는 타이머를 되돌림
+	_fallingTimer = 0;
+}
+
+void TetrisGrid::doSoftDrop() {
+	// 구현 필요
+
+	// 떨어진 뒤에는 타이머를 되돌림
+	_fallingTimer = 0;
+}
+
+void TetrisGrid::doRotateCW() {
+	_tryRotateShape(true);
+}
+
+void TetrisGrid::doRotateCCW() {
+	_tryRotateShape(false);
+}
+
+void TetrisGrid::doMoveLeft() {
+	// 구현 필요
+}
+
+void TetrisGrid::doMoveRight() {
+	// 구현 필요
+}
+
+void TetrisGrid::_tryRotateShape(bool isClockwise) {
 	// 회전 시도할 때 움직임을 결정
 	// 제자리에서 회전 시도한 뒤 실패하면 이 순서대로 블록을 움직인 뒤 회전을 시도함
 	// 편의를 위해 제자리 회전 (0, 0)도 표에 넣음
@@ -266,8 +239,15 @@ void TetrisGrid::tryRotateShape(bool isClockwise) {
 				return; // 회전이 성공하면 그대로 리턴
 		}
 		else {
-			int xDisp = I_ROTATION[_fallingRotation][i][0] * (isClockwise ? 1 : -1);
-			int yDisp = I_ROTATION[_fallingRotation][i][1] * (isClockwise ? 1 : -1);
+			int xDisp, yDisp;
+			if (isClockwise) {
+				xDisp = I_ROTATION[_fallingRotation][i][0];
+				yDisp = I_ROTATION[_fallingRotation][i][1];
+			}
+			else {
+				xDisp = -I_ROTATION[(_fallingRotation + 3) % 4][i][0];
+				yDisp = -I_ROTATION[(_fallingRotation + 3) % 4][i][1];
+			}
 			if (_fallingRotateShape(xDisp, yDisp, isClockwise))
 				return;
 		}
@@ -276,11 +256,6 @@ void TetrisGrid::tryRotateShape(bool isClockwise) {
 
 
 void TetrisGrid::_updateFallingShape(ProgramState& state) {
-	if (_fallingShape == TetriminoShape::INVALID) {
-		_fallingNewShapeRequired = true;
-		return;
-	}
-
 	const float FALLING_DELAY = 0.756f;
 
 	_fallingTimer += state.deltaTime;
@@ -321,7 +296,7 @@ bool TetrisGrid::_fallingRotateShape(int xDisp, int yDisp, bool isClockwise) {
 	// 성공하면 true, 실패하면 false 리턴
 
 	int rot = (isClockwise ? 1 : 3);
-	int rotInv = (isClockwise ? 3 : 1);
+	int prevFallingRotation = _fallingRotation;
 
 	// 상태를 (임시로) 적용
 	_fallingX += xDisp;
@@ -335,7 +310,7 @@ bool TetrisGrid::_fallingRotateShape(int xDisp, int yDisp, bool isClockwise) {
 	// 상태를 되돌리기
 	_fallingX -= xDisp;
 	_fallingY -= yDisp;
-	_fallingRotation = (_fallingRotation + rotInv) % 4;
+	_fallingRotation = prevFallingRotation;
 
 	// 실패했다고 보고
 	return false;

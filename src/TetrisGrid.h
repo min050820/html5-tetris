@@ -16,11 +16,18 @@ public:
 	void update(ProgramState& state);
 	bool isNewFallingShapeRequired();
 	void pushNewFallingShape(TetriminoShape newShape);
-	void tryRotateShape(bool isClockwise);
+
+	void doHardDrop();
+	void doSoftDrop();
+	void doRotateCW();
+	void doRotateCCW();
+	void doMoveLeft();
+	void doMoveRight();
 
 private:
 	void _updateFallingShape(ProgramState& state);
 	int _updateClearLine();
+	void _tryRotateShape(bool isClockwise);
 	bool _fallingRotateShape(int xDisp, int yDisp, bool isClockwise);
 	void _fallingLockShape();
 	bool _fallingCheckOverlap();
@@ -30,14 +37,6 @@ private:
 	// [0][0] = 왼쪽 아래
 	TetriminoBlock _grid[40][10];
 
-	bool _keyRotateClockwise = false;
-	bool _keyRotateCounterClockwise = false;
-	bool _keyLeft = false;
-	bool _keyRight = false;
-	bool _keyDown = false;
-	bool _keyHardDrop = false;
-
-	bool _fallingNewShapeRequired;
 	TetriminoShape _fallingShape;
 	int _fallingRotation, _fallingY, _fallingX;
 	float _fallingTimer;
