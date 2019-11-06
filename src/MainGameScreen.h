@@ -20,6 +20,10 @@ private:
 	AudioManager _audioManager;
 	TetrisGrid _tetrisGrid;
 	TetriminoGenerator _tetriminoGenerator;
+
+	float _lastLeftRepeat = 0.0f;
+	float _lastRightRepeat = 0.0f;
+	float _lastDownRepeat = 0.0f;
 };
 
 

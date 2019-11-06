@@ -28,6 +28,26 @@ void MainGameScreen::update(ProgramState& state) {
 	if (keyPressEvent[SDL_SCANCODE_RIGHT])
 		_tetrisGrid.doMoveRight();
 
+	if (!keyState[SDL_SCANCODE_LEFT])
+		_lastLeftRepeat = 0.0f;
+	if (!keyState[SDL_SCANCODE_RIGHT])
+		_lastRightRepeat = 0.0f;
+	if (!keyState[SDL_SCANCODE_DOWN])
+		_lastDownRepeat = 0.0f;
+
+	if (keyPressTime[SDL_SCANCODE_LEFT] - _lastLeftRepeat > 0.5f) {
+		_tetrisGrid.doMoveLeft();
+		_lastLeftRepeat += 0.05f;
+	}
+	if (keyPressTime[SDL_SCANCODE_RIGHT] - _lastRightRepeat > 0.5f) {
+		_tetrisGrid.doMoveRight();
+		_lastRightRepeat += 0.05f;
+	}
+	if (keyPressTime[SDL_SCANCODE_DOWN] - _lastDownRepeat > 0.5f) {
+		_tetrisGrid.doSoftDrop();
+		_lastDownRepeat += 0.05f;
+	}
+
 	_tetrisGrid.update(state);
 
 	if (_tetrisGrid.isNewFallingShapeRequired()) {
