@@ -28,6 +28,9 @@ AudioManager::AudioManager() : volume(0.25f) {
 	_audioDevice = SDL_OpenAudioDevice(nullptr, 0, &wanted, &obtained, 0);
 	if (_audioDevice == 0)
 		printf("AudioManager: Unable to open audio!\n");
+
+	SDL_AudioSpec wavSpec;
+	SDL_LoadWAV("D:/projects/cpp/html5-tetris/res/tetris_99.wav", &wavSpec, &audioData, &audioDataLength);
 }
 
 AudioManager::~AudioManager() {
@@ -50,8 +53,8 @@ void AudioManager::stopPlayback() {
 
 void AudioManager::audioCallback(float* stream, int len) {
 	for (int i = 0; i < len; i++) {
-		float val = sin(i * M_PI * 2 / 128);
-		stream[i] = val;
+		stream[i] = ((float) audioData[currentPlayPosition]) / 255 * 2 - 1;
+		currentPlayPosition = (currentPlayPosition + 1) % audioDataLength;
 	}
 
 	// 볼륨 조절

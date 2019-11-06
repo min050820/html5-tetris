@@ -18,7 +18,10 @@ public:
 	std::atomic<float> volume;
 
 private:
+	int currentPlayPosition = 0;
 	SDL_AudioDeviceID _audioDevice;
+	uint8_t *audioData;
+	uint32_t audioDataLength;
 };
 
 
