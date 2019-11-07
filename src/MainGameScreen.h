@@ -6,6 +6,7 @@
 #include "AudioManager.h"
 #include "TetrisGrid.h"
 #include "TetriminoGenerator.h"
+#include "TetriminoPreview.h"
 
 
 class MainGameScreen : public Screen {
@@ -20,6 +21,7 @@ private:
 	AudioManager _audioManager;
 	TetrisGrid _tetrisGrid;
 	TetriminoGenerator _tetriminoGenerator;
+	TetriminoPreview _tetriminoPreview;
 
 	float _lastLeftRepeat = 0.0f;
 	float _lastRightRepeat = 0.0f;

@@ -7,6 +7,7 @@
 
 MainGameScreen::MainGameScreen(ProgramState& programState) {
 	_audioManager.startPlayback();
+	_tetriminoPreview.setTetriminoGenerator(&_tetriminoGenerator);
 }
 
 MainGameScreen::~MainGameScreen() {
@@ -66,5 +67,6 @@ void MainGameScreen::render(ProgramState& state) {
 	SDL_SetRenderDrawColor(state.renderer(), 32, 32, 32, 255);
 	SDL_RenderFillRect(state.renderer(), &r);
 
+	_tetriminoPreview.render(state, {screenX + 16, screenY + 16, screenLength - 32, screenLength - 32});
 	_tetrisGrid.render(state, {screenX + 16, screenY + 16, screenLength - 32, screenLength - 32});
 }

@@ -31,6 +31,7 @@ set(TETRIS_SOURCES main.cpp
 	src/Tetrimino.h
 	src/TetrisGrid.h src/TetrisGrid.cpp
 	src/TetriminoGenerator.h src/TetriminoGenerator.cpp
+	src/TetriminoPreview.h src/TetriminoPreview.cpp
 	src/AudioManager.h src/AudioManager.cpp
 )
 
