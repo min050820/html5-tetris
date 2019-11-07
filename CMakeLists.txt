@@ -59,8 +59,9 @@ set_property(TARGET tetris PROPERTY CXX_STANDARD 14)
 # 만약 Emscripten 환경이라면...
 if(EMSCRIPTEN)
     # 환경 변수를 설정함
-    set_property(TARGET tetris APPEND_STRING PROPERTY COMPILE_FLAGS "-s WASM=0 -s USE_SDL=2 --embed-file res/")
-    set_property(TARGET tetris APPEND_STRING PROPERTY LINK_FLAGS "-s WASM=0 -s USE_SDL=2 --embed-file res/")
+    set_property(TARGET tetris APPEND_STRING PROPERTY COMPILE_FLAGS "-s WASM=0 -s USE_SDL=2 -s ALLOW_MEMORY_GROWTH=1 --embed-file ${CMAKE_CURRENT_SOURCE_DIR}/res@/res")
+    set_property(TARGET tetris APPEND_STRING PROPERTY LINK_FLAGS "-s WASM=0 -s USE_SDL=2 -s ALLOW_MEMORY_GROWTH=1 --embed-file ${CMAKE_CURRENT_SOURCE_DIR}/res@/res")
+
 elseif(WIN32)
     target_link_libraries(tetris SDL2main SDL2)
 endif()

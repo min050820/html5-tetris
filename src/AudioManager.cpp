@@ -30,7 +30,7 @@ AudioManager::AudioManager() : volume(0.25f) {
 		printf("AudioManager: Unable to open audio!\n");
 
 	SDL_AudioSpec wavSpec;
-	SDL_LoadWAV("D:/projects/cpp/html5-tetris/res/tetris_99.wav", &wavSpec, &audioData, &audioDataLength);
+	SDL_LoadWAV("res/tetris_99.wav", &wavSpec, &audioData, &audioDataLength);
 }
 
 AudioManager::~AudioManager() {

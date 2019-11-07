@@ -2,7 +2,7 @@
 #define TETRIMINO_H_
 
 
-#include <exception>
+#include <stdexcept>
 
 
 enum class TetriminoBlock : unsigned char {
@@ -187,7 +187,7 @@ inline TetriminoBlock getTetriminoRasterShape(TetriminoShape shape, int rotation
 	if (shape == TetriminoShape::L)
 		return L_SHAPE_ARRAY[rotation * 16 + (3 - y) * 4 + x] == '#' ? TetriminoBlock::L : TetriminoBlock::EMPTY;
 
-	throw std::exception("Tried to get invalid TetriminoShape's raster shape");
+	throw std::runtime_error("Tried to get invalid TetriminoShape's raster shape");
 }
 
 
