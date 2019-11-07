@@ -59,7 +59,7 @@ void TetriminoPreview::render(ProgramState& state, SDL_Rect boundary) {
 				TetriminoBlock renderBlock = TetriminoBlock::EMPTY;
 
 				if (peek[i] != TetriminoShape::INVALID && j + 1 < 4) {
-					// (구현)
+					renderBlock = getTetriminoRasterShape(peek[i], 0, j + 1, k);
 				}
 
 				r = { baseX + blockSize*k, baseY + (int)(blockSizeF*i*4.5f) + blockSize*j, blockSize, blockSize };
