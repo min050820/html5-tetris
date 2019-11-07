@@ -44,7 +44,7 @@ void MainGameScreen::update(ProgramState& state) {
 		_tetrisGrid.doMoveRight();
 		_lastRightRepeat += 0.05f;
 	}
-	if (keyPressTime[SDL_SCANCODE_DOWN] - _lastDownRepeat > 0.5f) {
+	if (keyPressTime[SDL_SCANCODE_DOWN] - _lastDownRepeat > 0.05f) {
 		_tetrisGrid.doSoftDrop();
 		_lastDownRepeat += 0.05f;
 	}
