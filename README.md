@@ -1,7 +1,11 @@
-Intro
-=====
+# html5-tetris
 
-This is the source code repo for my tutorial.
-Unfortunately, the tutorial is not uploaded anywhere.
-Please make an issue or e-mail me if you have any questions.
-Note that I do not intend to make it into a real, ready-to-publish, game.
+고등학교 2학년때 학교 친구들에게 지식 나눔활동을 할때 만든 자료.
+
+## 컴파일
+교육을 진행할때는 emcc로 컴파일 가능했는데, 지금은 안될수도 있음.
+
+아마 비주얼 스튜디오로 컴파일이... 될거라고 생각함.
+
+## 라이선스
+LICENSE 참고.
